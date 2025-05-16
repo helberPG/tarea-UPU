@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Cardiotocograma</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        form {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #resultado {
+            margin-top: 20px;
+            text-align: center;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Datos Cardiotocográficos</h1>
+    <form action="/predecir_formulario" method="post" id="ctg-form">
+        <!-- Campos numéricos enteros -->
+        <label for="Frecuencia_cardíaca_fetal_basal">Frecuencia cardíaca fetal basal</label>
+        <input type="number" name="Frecuencia_cardíaca_fetal_basal" required>
+
+        <label for="Variabilidad_anormal_a_corto_plazo">Variabilidad anormal a corto plazo</label>
+        <input type="number" name="Variabilidad_anormal_a_corto_plazo" required>
+
+        <label for="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo">% Tiempo con variabilidad anormal largo plazo</label>
+        <input type="number" name="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo" required>
+
+        <label for="Ancho_del_histograma">Ancho del histograma</label>
+        <input type="number" name="Ancho_del_histograma" required>
+
+        <label for="Histograma_minimo">Histograma mínimo</label>
+        <input type="number" name="Histograma_minimo" required>
+
+        <label for="Histograma_maximo">Histograma máximo</label>
+        <input type="number" name="Histograma_maximo" required>
+
+        <label for="Numero_de_picos_del_histograma">Número de picos del histograma</label>
+        <input type="number" name="Numero_de_picos_del_histograma" required>
+
+        <label for="Numero_de_ceros_del_histograma">Número de ceros del histograma</label>
+        <input type="number" name="Numero_de_ceros_del_histograma" required>
+
+        <label for="Modo_histograma">Modo del histograma</label>
+        <input type="number" name="Modo_histograma" required>
+
+        <label for="Media_del_histograma">Media del histograma</label>
+        <input type="number" name="Media_del_histograma" required>
+
+        <label for="Mediana_del_histograma">Mediana del histograma</label>
+        <input type="number" name="Mediana_del_histograma" required>
+
+        <label for="Varianza_del_histograma">Varianza del histograma</label>
+        <input type="number" name="Varianza_del_histograma" required>
+
+        <label for="Tendencia_del_histograma">Tendencia del histograma</label>
+        <input type="number" name="Tendencia_del_histograma" required>
+
+        <!-- Campos numéricos decimales -->
+        <label for="Aceleraciones">Aceleraciones</label>
+        <input type="number" step="0.01" name="Aceleraciones" required>
+
+        <label for="Movimiento_fetal">Movimiento fetal</label>
+        <input type="number" step="0.01" name="Movimiento_fetal" required>
+
+        <label for="Contracciones_uterinas">Contracciones uterinas</label>
+        <input type="number" step="0.01" name="Contracciones_uterinas" required>
+
+        <label for="Desaceleraciones_ligeras">Desaceleraciones ligeras</label>
+        <input type="number" step="0.01" name="Desaceleraciones_ligeras" required>
+
+        <label for="Desaceleraciones_severas">Desaceleraciones severas</label>
+        <input type="number" step="0.01" name="Desaceleraciones_severas" required>
+
+        <label for="Desaceleraciones_prolongadas">Desaceleraciones prolongadas</label>
+        <input type="number" step="0.01" name="Desaceleraciones_prolongadas" required>
+
+        <label for="Valor_medio_de_la_variabilidad_a_corto_plazo">Variabilidad a corto plazo (promedio)</label>
+        <input type="number" step="0.01" name="Valor_medio_de_la_variabilidad_a_corto_plazo" required>
+
+        <label for="Valor_medio_de_la_variabilidad_a_largo_plazo">Variabilidad a largo plazo (promedio)</label>
+        <input type="number" step="0.01" name="Valor_medio_de_la_variabilidad_a_largo_plazo" required>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+
+    
+    <div id="resultado">
+        <h2>Resultado de la Clasificación:</h2>
+        <p id="respuesta">Esperando resultados...</p>
+    </div>
+
+    <form id="pdf-form" action="/descargar_pdf" method="post">
+        <input type="hidden" name="prediccion" id="pdf-prediccion">
+        <input type="hidden" name="probabilidades" id="pdf-probabilidades">
+        <!-- Campos de entrada ocultos generados por JavaScript -->
+        <div id="pdf-campos"></div>
+        <button type="submit">📄 Descargar PDF</button>
+    </form>
+
+    <script>
+        document.getElementById('ctg-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+            const values = Object.fromEntries(data.entries());
+
+            try {
+                const response = await fetch('/predecir_formulario', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(values)
+                });
+
+                const result = await response.json();
+
+                // Mostrar el resultado
+                document.getElementById('respuesta').innerText = 'Resultado de salud fetal: ' + result.prediccion;
+
+                // Preparar el formulario para el PDF
+                document.getElementById('pdf-prediccion').value = result.prediccion;
+                document.getElementById('pdf-probabilidades').value = result.probabilidades;
+
+                const camposDiv = document.getElementById('pdf-campos');
+                camposDiv.innerHTML = '';
+
+                for (const [key, value] of Object.entries(values)) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    camposDiv.appendChild(input);
+                }
+
+                // Mostrar botón PDF
+                document.getElementById('pdf-form').style.display = 'block';
+
+            } catch (error) {
+                document.getElementById('respuesta').innerText = 'Error al procesar los datos.';
+            }
+        });
+    </script>
+</body>
+</html>
