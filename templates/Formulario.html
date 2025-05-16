@@ -39,75 +39,123 @@
         }
         button {
             margin-top: 20px;
-            width: 100%;
+            width: 48%;
             padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 4%;
+        }
+        .enviar-btn {
             background-color: #007BFF;
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
         }
-        button:hover {
+        .enviar-btn:hover {
             background-color: #0056b3;
         }
+        .limpiar-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+        .limpiar-btn:hover {
+            background-color: #a71d2a;
+        }
         #resultado {
-            margin-top: 20px;
+            margin-top: 30px;
             text-align: center;
             color: #fff;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+            font-size: 18px;
+        }
+        #pdf-form {
+            display: none;
+            max-width: 900px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        #pdf-form button {
+            width: auto;
+            background-color: #28a745;
+            color: white;
+        }
+        #pdf-form button:hover {
+            background-color: #1e7e34;
         }
     </style>
 </head>
 <body>
     <h1>Formulario de Datos Cardiotocográficos</h1>
-    <form action="/predecir_formulario" method="post" id="ctg-form">
+    
+    <form id="ctg-form">
         <!-- Campos numéricos enteros -->
-        <label for="Frecuencia_cardíaca_fetal_basal">Frecuencia cardíaca fetal basal</label>
-        <input type="number" name="Frecuencia_cardíaca_fetal_basal" required>
+<label for="Frecuencia_cardíaca_fetal_basal">Frecuencia cardíaca fetal basal</label>
+<input type="number" name="Frecuencia_cardíaca_fetal_basal" required min="100" max="200"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Variabilidad_anormal_a_corto_plazo">Variabilidad anormal a corto plazo</label>
-        <input type="number" name="Variabilidad_anormal_a_corto_plazo" required>
+<label for="Variabilidad_anormal_a_corto_plazo">Variabilidad anormal a corto plazo</label>
+<input type="number" name="Variabilidad_anormal_a_corto_plazo" required min="0" max="50"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo">% Tiempo con variabilidad anormal largo plazo</label>
-        <input type="number" name="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo" required>
+<label for="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo">% Tiempo con variabilidad anormal largo plazo</label>
+<input type="number" name="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo" required min="0" max="100"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Ancho_del_histograma">Ancho del histograma</label>
-        <input type="number" name="Ancho_del_histograma" required>
+<label for="Ancho_del_histograma">Ancho del histograma</label>
+<input type="number" name="Ancho_del_histograma" required min="0" max="100"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Histograma_minimo">Histograma mínimo</label>
-        <input type="number" name="Histograma_minimo" required>
+<label for="Histograma_minimo">Histograma mínimo</label>
+<input type="number" name="Histograma_minimo" required min="0" max="50"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Histograma_maximo">Histograma máximo</label>
-        <input type="number" name="Histograma_maximo" required>
+<label for="Histograma_maximo">Histograma máximo</label>
+<input type="number" name="Histograma_maximo" required min="0" max="150"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Numero_de_picos_del_histograma">Número de picos del histograma</label>
-        <input type="number" name="Numero_de_picos_del_histograma" required>
+<label for="Numero_de_picos_del_histograma">Número de picos del histograma</label>
+<input type="number" name="Numero_de_picos_del_histograma" required min="0" max="50"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Numero_de_ceros_del_histograma">Número de ceros del histograma</label>
-        <input type="number" name="Numero_de_ceros_del_histograma" required>
+<label for="Numero_de_ceros_del_histograma">Número de ceros del histograma</label>
+<input type="number" name="Numero_de_ceros_del_histograma" required min="0" max="50"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Modo_histograma">Modo del histograma</label>
-        <input type="number" name="Modo_histograma" required>
+<label for="Modo_histograma">Modo del histograma</label>
+<input type="number" name="Modo_histograma" required min="0" max="150"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Media_del_histograma">Media del histograma</label>
-        <input type="number" name="Media_del_histograma" required>
+<label for="Media_del_histograma">Media del histograma</label>
+<input type="number" name="Media_del_histograma" required min="0" max="150"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Mediana_del_histograma">Mediana del histograma</label>
-        <input type="number" name="Mediana_del_histograma" required>
+<label for="Mediana_del_histograma">Mediana del histograma</label>
+<input type="number" name="Mediana_del_histograma" required min="0" max="150"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Varianza_del_histograma">Varianza del histograma</label>
-        <input type="number" name="Varianza_del_histograma" required>
+<label for="Varianza_del_histograma">Varianza del histograma</label>
+<input type="number" name="Varianza_del_histograma" required min="0" max="150"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Tendencia_del_histograma">Tendencia del histograma</label>
-        <input type="number" name="Tendencia_del_histograma" required>
+<label for="Tendencia_del_histograma">Tendencia del histograma</label>
+<input type="number" name="Tendencia_del_histograma" required min="0" max="150"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
+
+
 
         <!-- Campos numéricos decimales -->
-        <label for="Aceleraciones">Aceleraciones</label>
-        <input type="number" step="0.01" name="Aceleraciones" required>
+<label for="Aceleraciones">Aceleraciones</label>
+<input type="number" step="0.01" name="Aceleraciones" required min="0" max="10"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Movimiento_fetal">Movimiento fetal</label>
-        <input type="number" step="0.01" name="Movimiento_fetal" required>
+<label for="Movimiento_fetal">Movimiento fetal</label>
+<input type="number" step="0.01" name="Movimiento_fetal" required min="0" max="10"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
         <label for="Contracciones_uterinas">Contracciones uterinas</label>
         <input type="number" step="0.01" name="Contracciones_uterinas" required>
@@ -127,22 +175,27 @@
         <label for="Valor_medio_de_la_variabilidad_a_largo_plazo">Variabilidad a largo plazo (promedio)</label>
         <input type="number" step="0.01" name="Valor_medio_de_la_variabilidad_a_largo_plazo" required>
 
-        <button type="submit">Enviar</button>
+
+       <!-- Botones Enviar y Limpiar -->
+        <div class="btn-container">
+            <button type="submit" class="enviar-btn">📤 Predecir</button>
+            <button type="button" class="limpiar-btn" onclick="document.getElementById('ctg-form').reset(); document.getElementById('resultado').innerText='Esperando resultados...'; document.getElementById('pdf-form').style.display='none';">🧹 Borrar datos</button>
+        </div>
     </form>
 
+ 
 
-    
     <div id="resultado">
         <h2>Resultado de la Clasificación:</h2>
         <p id="respuesta">Esperando resultados...</p>
     </div>
 
+    <!-- PDF form -->
     <form id="pdf-form" action="/descargar_pdf" method="post">
         <input type="hidden" name="prediccion" id="pdf-prediccion">
         <input type="hidden" name="probabilidades" id="pdf-probabilidades">
-        <!-- Campos de entrada ocultos generados por JavaScript -->
         <div id="pdf-campos"></div>
-        <button type="submit">📄 Descargar PDF</button>
+        <button type="submit">📄 Descargar Resultado en PDF</button>
     </form>
 
     <script>
@@ -161,10 +214,8 @@
 
                 const result = await response.json();
 
-                // Mostrar el resultado
                 document.getElementById('respuesta').innerText = 'Resultado de salud fetal: ' + result.prediccion;
 
-                // Preparar el formulario para el PDF
                 document.getElementById('pdf-prediccion').value = result.prediccion;
                 document.getElementById('pdf-probabilidades').value = result.probabilidades;
 
@@ -179,7 +230,6 @@
                     camposDiv.appendChild(input);
                 }
 
-                // Mostrar botón PDF
                 document.getElementById('pdf-form').style.display = 'block';
 
             } catch (error) {
