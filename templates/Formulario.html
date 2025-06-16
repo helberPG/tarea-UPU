@@ -1,241 +1,312 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Formulario Cardiotocograma</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        form {
-            max-width: 900px;
-            margin: auto;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            margin-top: 20px;
-            width: 48%;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 4%;
-        }
-        .enviar-btn {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-        }
-        .enviar-btn:hover {
-            background-color: #0056b3;
-        }
-        .limpiar-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-        }
-        .limpiar-btn:hover {
-            background-color: #a71d2a;
-        }
-        #resultado {
-            margin-top: 30px;
-            text-align: center;
-            color: #fff;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
-            font-size: 18px;
-        }
-        #pdf-form {
-            display: none;
-            max-width: 900px;
-            margin: 20px auto;
-            text-align: center;
-        }
-        #pdf-form button {
-            width: auto;
-            background-color: #28a745;
-            color: white;
-        }
-        #pdf-form button:hover {
-            background-color: #1e7e34;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Formulario Cardiotocograma</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://blogs.ucontinental.edu.pe/wp-content/uploads/2022/09/ramas-de-la-medicina-humana.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      padding: 25px;
+    }
+    h1 {
+      text-align: center;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    form {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input[type="number"],
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 4%;
+    }
+    button {
+      margin-top: 20px;
+      width: 48%;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+    }
+    .enviar-btn {
+      background-color: #fa0101;
+      color: white;
+      border: none;
+    }
+    .enviar-btn:hover {
+      background-color: #f77904e1;
+    }
+    .limpiar-btn {
+      background-color: #53f508;
+      color: white;
+      border: none;
+    }
+    .limpiar-btn:hover {
+      background-color: #7de638;
+    }
+    .nav-btn {
+      background-color: #0451f7;
+      color: white;
+    }
+    .nav-btn:hover {
+      background-color: #07c8f8;
+    }
+    #resultado {
+      margin-top: 30px;
+      text-align: center;
+      color: #f7f1f1;
+      text-shadow: 1px 1px 2px rgba(5, 5, 5, 0.6);
+      font-size: 22px;
+    }
+    #pdf-form {
+      display: none;
+      max-width: 900px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    #pdf-form button {
+      width: auto;
+      background-color: #28a745;
+      color: white;
+    }
+    #pdf-form button:hover {
+      background-color: #1e7e34;
+    }
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <h1>Formulario de Datos Cardiotocográficos</h1>
-    
-    <form id="ctg-form">
-        <!-- Campos numéricos enteros -->
-<label for="Frecuencia_cardíaca_fetal_basal">Frecuencia cardíaca fetal basal</label>
-<input type="number" name="Frecuencia_cardíaca_fetal_basal" required min="100" max="200"
+  <h1>Formulario de Datos Cardiotocográficos</h1>
+
+  <form id="multiStepForm">
+    <!-- Paso 1 -->
+    <div class="form-step active" id="step1">
+
+        <label for="nombre">Nombre completo</label>
+        <input type="text" name="nombre" required>
+     
+        <label for="email">Correo electrónico</label>
+        <input type="email" name="email" required>
+
+        <label for="telefono">Número de celular</label>
+        <input type="number" name="telefono" required>
+
+      <div class="btn-container">
+        <span></span>
+        <button type="button" class="nav-btn" onclick="nextStep()">➡️ Siguiente</button>
+      </div>
+    </div>
+
+    <!-- Paso 2 -->
+    <div class="form-step" id="step2">
+      <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <!-- Atributos: columnas izquierda y derecha -->
+        <div style="flex: 1; min-width: 400px;">
+          <label for="Frecuencia_cardíaca_fetal_basal">Frecuencia cardíaca fetal basal</label>
+<input type="number" name="Frecuencia_cardíaca_fetal_basal" required min="106" max="160"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Variabilidad_anormal_a_corto_plazo">Variabilidad anormal a corto plazo</label>
-<input type="number" name="Variabilidad_anormal_a_corto_plazo" required min="0" max="50"
+<input type="number" name="Variabilidad_anormal_a_corto_plazo" required min="12" max="87"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo">% Tiempo con variabilidad anormal largo plazo</label>
-<input type="number" name="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo" required min="0" max="100"
+<input type="number" name="Porcentaje_de_tiempo_con_variabilidad_anormal_largo_plazo" required min="0" max="91"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Ancho_del_histograma">Ancho del histograma</label>
-<input type="number" name="Ancho_del_histograma" required min="0" max="100"
+<input type="number" name="Ancho_del_histograma" required min="3" max="180"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Histograma_minimo">Histograma mínimo</label>
-<input type="number" name="Histograma_minimo" required min="0" max="50"
+<input type="number" name="Histograma_minimo" required min="50" max="159"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Histograma_maximo">Histograma máximo</label>
-<input type="number" name="Histograma_maximo" required min="0" max="150"
+<input type="number" name="Histograma_maximo" required min="122" max="238"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Numero_de_picos_del_histograma">Número de picos del histograma</label>
-<input type="number" name="Numero_de_picos_del_histograma" required min="0" max="50"
+<input type="number" name="Numero_de_picos_del_histograma" required min="0" max="18"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Numero_de_ceros_del_histograma">Número de ceros del histograma</label>
-<input type="number" name="Numero_de_ceros_del_histograma" required min="0" max="50"
+<input type="number" name="Numero_de_ceros_del_histograma" required min="0" max="10"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Modo_histograma">Modo del histograma</label>
-<input type="number" name="Modo_histograma" required min="0" max="150"
+<input type="number" name="Modo_histograma" required min="60" max="187"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Media_del_histograma">Media del histograma</label>
-<input type="number" name="Media_del_histograma" required min="0" max="150"
+<input type="number" name="Media_del_histograma" required min="73" max="182"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Mediana_del_histograma">Mediana del histograma</label>
-<input type="number" name="Mediana_del_histograma" required min="0" max="150"
+<input type="number" name="Mediana_del_histograma" required min="77" max="186"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-<label for="Varianza_del_histograma">Varianza del histograma</label>
-<input type="number" name="Varianza_del_histograma" required min="0" max="150"
+        </div>
+
+        <div style="flex: 1; min-width: 400px;">
+          <label for="Varianza_del_histograma">Varianza del histograma</label>
+<input type="number" name="Varianza_del_histograma" required min="0" max="269"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Tendencia_del_histograma">Tendencia del histograma</label>
-<input type="number" name="Tendencia_del_histograma" required min="0" max="150"
-       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
+<input type="number" name="Tendencia_del_histograma" required min="-1" max="1"
+       oninput="if (this.value < -1) { alert('Valor no permitido'); this.value = ''; }">
 
 
 
         <!-- Campos numéricos decimales -->
 <label for="Aceleraciones">Aceleraciones</label>
-<input type="number" step="0.01" name="Aceleraciones" required min="0" max="10"
+<input type="number" step="0.001" name="Aceleraciones" required min="0" max="0.019"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
 <label for="Movimiento_fetal">Movimiento fetal</label>
-<input type="number" step="0.01" name="Movimiento_fetal" required min="0" max="10"
+<input type="number" step="0.001" name="Movimiento_fetal" required min="0" max="0.481"
        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
         <label for="Contracciones_uterinas">Contracciones uterinas</label>
-        <input type="number" step="0.01" name="Contracciones_uterinas" required>
+        <input type="number" step="0.001" name="Contracciones_uterinas" required min="0" max="0.015"
+        oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
         <label for="Desaceleraciones_ligeras">Desaceleraciones ligeras</label>
-        <input type="number" step="0.01" name="Desaceleraciones_ligeras" required>
+        <input type="number" step="0.001" name="Desaceleraciones_ligeras" required min="0" max="0.015"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
         <label for="Desaceleraciones_severas">Desaceleraciones severas</label>
-        <input type="number" step="0.01" name="Desaceleraciones_severas" required>
+        <input type="number" step="0.001" name="Desaceleraciones_severas" required min="0" max="0.001"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }"> 
 
         <label for="Desaceleraciones_prolongadas">Desaceleraciones prolongadas</label>
-        <input type="number" step="0.01" name="Desaceleraciones_prolongadas" required>
+        <input type="number" step="0.001" name="Desaceleraciones_prolongadas" required min="0" max="0.005"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Valor_medio_de_la_variabilidad_a_corto_plazo">Variabilidad a corto plazo (promedio)</label>
-        <input type="number" step="0.01" name="Valor_medio_de_la_variabilidad_a_corto_plazo" required>
+        <label for="Valor_medio_de_la_variabilidad_a_corto_plazo">Valor medio de la Variabilidad a corto plazo </label>
+        <input type="number" step="0.001" name="Valor_medio_de_la_variabilidad_a_corto_plazo" required min="0.2" max="7"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
 
-        <label for="Valor_medio_de_la_variabilidad_a_largo_plazo">Variabilidad a largo plazo (promedio)</label>
-        <input type="number" step="0.01" name="Valor_medio_de_la_variabilidad_a_largo_plazo" required>
-
-
-       <!-- Botones Enviar y Limpiar -->
-        <div class="btn-container">
-            <button type="submit" class="enviar-btn">📤 Predecir</button>
-            <button type="button" class="limpiar-btn" onclick="document.getElementById('ctg-form').reset(); document.getElementById('resultado').innerText='Esperando resultados...'; document.getElementById('pdf-form').style.display='none';">🧹 Borrar datos</button>
+        <label for="Valor_medio_de_la_variabilidad_a_largo_plazo">Valor medio de la Variabilidad a largo plazo </label>
+        <input type="number" step="0.001" name="Valor_medio_de_la_variabilidad_a_largo_plazo" required min="0" max="50.7"
+       oninput="if (this.value < 0) { alert('No se permiten valores negativos'); this.value = ''; }">
+      
         </div>
-    </form>
+      </div>
 
- 
+      <div class="btn-container">
+        <button type="button" class="nav-btn" onclick="prevStep()">⬅️ Anterior</button>
+        <button type="button" class="limpiar-btn" onclick="limpiarFormulario()">🧹 Limpiar</button>
 
-    <div id="resultado">
-        <h2>Resultado de la Clasificación:</h2>
-        <p id="respuesta">Esperando resultados...</p>
+        <button type="submit" class="enviar-btn">📤 Predecir</button>
+      </div>
     </div>
+  </form>
 
-    <!-- PDF form -->
-    <form id="pdf-form" action="/descargar_pdf" method="post">
-        <input type="hidden" name="prediccion" id="pdf-prediccion">
-        <input type="hidden" name="probabilidades" id="pdf-probabilidades">
-        <div id="pdf-campos"></div>
-        <button type="submit">📄 Descargar Resultado en PDF</button>
-    </form>
+  <div id="resultado">
+    <h2>Resultado de la Clasificación:</h2>
+    <p id="respuesta">Esperando resultados...</p>
+  </div>
 
-    <script>
-        document.getElementById('ctg-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const form = event.target;
-            const data = new FormData(form);
-            const values = Object.fromEntries(data.entries());
+  <form id="pdf-form" action="/descargar_pdf" method="post">
+    <input type="hidden" name="prediccion" id="pdf-prediccion">
+    <input type="hidden" name="probabilidades" id="pdf-probabilidades">
+    <div id="pdf-campos"></div>
+    <button type="submit">📄 Descargar Resultado en PDF</button>
+  </form>
 
-            try {
-                const response = await fetch('/predecir_formulario', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(values)
-                });
+ <script>
+  let currentStep = 1;
 
-                const result = await response.json();
+  function showStep(step) {
+    document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+    document.getElementById(`step${step}`).classList.add('active');
+  }
 
-                document.getElementById('respuesta').innerText = 'Resultado de salud fetal: ' + result.prediccion;
+  function nextStep() {
+    currentStep++;
+    showStep(currentStep);
+  }
 
-                document.getElementById('pdf-prediccion').value = result.prediccion;
-                document.getElementById('pdf-probabilidades').value = result.probabilidades;
+  function prevStep() {
+    currentStep--;
+    showStep(currentStep);
+  }
 
-                const camposDiv = document.getElementById('pdf-campos');
-                camposDiv.innerHTML = '';
+  // ✅ Esta es la función que faltaba
+  function limpiarFormulario() {
+    const form = document.getElementById('multiStepForm');
+    form.reset(); // Limpia todos los inputs
+    currentStep = 1;
+    showStep(currentStep);
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('respuesta').innerText = 'Esperando resultados...';
+    document.getElementById('pdf-form').style.display = 'none';
+  }
 
-                for (const [key, value] of Object.entries(values)) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = value;
-                    camposDiv.appendChild(input);
-                }
+  document.getElementById('multiStepForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const form = event.target;
+    const data = new FormData(form);
+    const values = Object.fromEntries(data.entries());
 
-                document.getElementById('pdf-form').style.display = 'block';
+    try {
+      const response = await fetch('/predecir_formulario', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+      });
 
-            } catch (error) {
-                document.getElementById('respuesta').innerText = 'Error al procesar los datos.';
-            }
-        });
-    </script>
-</body>
-</html>
+      const result = await response.json();
+      document.getElementById('respuesta').innerText = 'Resultado de salud fetal: ' + result.prediccion;
+      document.getElementById('pdf-prediccion').value = result.prediccion;
+      document.getElementById('pdf-probabilidades').value = result.probabilidades;
+
+      const camposDiv = document.getElementById('pdf-campos');
+      camposDiv.innerHTML = '';
+      for (const [key, value] of Object.entries(values)) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        camposDiv.appendChild(input);
+      }
+      document.getElementById('pdf-form').style.display = 'block';
+      document.getElementById('resultado').style.display = 'block';
+
+    } catch (error) {
+      document.getElementById('respuesta').innerText = 'Error al procesar los datos.';
+    }
+  });
+</script>
